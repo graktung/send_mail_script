@@ -24,10 +24,15 @@ the_msg = MIMEMultipart("alternative")
 
 the_msg["Subject"] = input("[?] Subject: ")
 the_msg["From"] = input("[?] From: ")
-the_msg["To"] = input("[?] To: ")
+to_list = input("[?] To: ")
+try:
+	with open(to_list) as f:
+		to_list =  f.readlines()
+		for i in range(len(to_list)):
+			to_list[i] = to_list[i].rstrip()
 file_html = input("[?] File HTML: ")
 try:
-	with open(file_html, 'r') as f:
+	with open(file_html) as f:
 		html_txt = f.read()
 except:
 	print('[-] No such file or directory: %r' %file_html)
@@ -37,7 +42,10 @@ part = MIMEText(html_txt, 'html')
 the_msg.attach(part)
 body_mail = the_msg.as_string()
 
-email_conn.sendmail(the_msg["From"], the_msg["To"], body_mail)
+for to in to_list:
+	the_msg["To"] = to
+	email_conn.sendmail(the_msg["From"], the_msg["To"], body_mail)
+
 email_conn.quit()
 
 print("[+] Email sent succesfully!")
