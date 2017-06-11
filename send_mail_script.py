@@ -4,8 +4,8 @@ from email.mime.text import MIMEText
 
 host = "smtp.gmail.com"
 port = 587
-username = "graktung@gmail.com"
-password = "$password=$_REQUEST"
+username = "null"
+password = "null"
 
 try:
 	email_conn = smtplib.SMTP(host, port)
